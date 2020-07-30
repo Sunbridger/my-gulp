@@ -4,7 +4,9 @@ const babel = require('gulp-babel');
 
 function streamTask() {
   return src('src/**/*.js')
-    .pipe(babel())
+    .pipe(babel({
+        presets: ['es2015']
+    }))
     .pipe(dest('output'));
 }
 
