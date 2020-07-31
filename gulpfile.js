@@ -1,8 +1,8 @@
-const { src, dest } = require('gulp');
+const { src, dest, series } = require('gulp');
 const babel = require('gulp-babel');
+const tsProject = require('gulp-typescript').createProject('./tsconfig.json');
 
-
-function streamTask() {
+function babelHandle() {
   return src('src/**/*.js')
     .pipe(babel({
         presets: ['es2015']
@@ -10,4 +10,13 @@ function streamTask() {
     .pipe(dest('output'));
 }
 
-exports.default = streamTask;
+function tsHandle() {
+    return tsProject.src()
+        .pipe(tsProject()).js
+        .pipe(babel({
+            presets: ['es2015']
+        }))
+        .pipe(dest('output'));
+  }
+
+exports.default = series(tsHandle);
